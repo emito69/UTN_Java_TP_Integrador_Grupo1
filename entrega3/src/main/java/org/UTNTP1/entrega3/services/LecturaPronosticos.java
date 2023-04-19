@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.UTNTP1.entrega3.models.PronosticoObjetoParse;
+import java.sql.ResultSet;
 
 import org.UTNTP1.entrega3.exceptions.DBConnErrorException;
 
@@ -23,13 +24,30 @@ public class LecturaPronosticos {
 		return listaDePronosticosParseados;
 	}
 	
-	// MÉTODO OBTENCIÓN DATO CANT PARTICIPANTE
-	public int obtenerCantParticipantes()  throws IOException, DBConnErrorException {
+	
+	// MÉTODO CONSULTA PREPARADA obtenerPronosticosParticipante()
+	public List<PronosticoObjetoParse> obtenerPronosticosDeUnParticipante(String participante) throws IOException, DBConnErrorException {
+		
+		DBConn dbConn3 = new DBConn();
+		dbConn3.conectar();
+		dbConn3.obtenerPronosticosDeUnParticipante(listaDePronosticosParseados, Integer.parseInt(participante));
+		
+		return listaDePronosticosParseados;
+		
+	}
+	
+	
+	// MÉTODO OBTENCIÓN ArrayList<String> PARTICIPANTES
+	public ArrayList<String> obtenerListaDeParticipantes()  throws IOException, DBConnErrorException {
 		
 		DBConn dbConn2 = new DBConn();
 		dbConn2.conectar();
-		return	dbConn2.obtenerCantParticipantes();
 		
+		ArrayList<String> listaParticipantes = dbConn2.obtenerListaDeParticipantes();
+						
+		return listaParticipantes;
+	
+	
 	}
 	
 	// MÉTODO CARGADOR

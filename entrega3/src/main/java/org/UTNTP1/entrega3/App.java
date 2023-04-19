@@ -34,45 +34,54 @@ public class App {
 			String rutaConfig = "C:\\Users\\alvar\\Downloads\\pruebas GIT UTN\\UTN_Java_TP_Integrador_Grupo1\\entrega3\\src\\main\\resources\\config.properties";//args[1]
 			
 
+			///// ******* PRONOSTICOS **************************************  ///////	
 			
-			try{
-	            
-				///// ***** RESULTADOS *****  /////// 
-				
-				
-				LecturaResultados lecturaResul= new LecturaResultados(rutaResultados);	
-				
-				List<ResultadoObjetoParse> listita1 = lecturaResul.leerCSVResultados();
-				
-				for(ResultadoObjetoParse result : listita1) {
-					System.out.println(result.getNombreEquipo1());	
-				}
-				
-				
+			LecturaFases lectorDefases = new LecturaFases(rutaResultados);	
+						
+			Fases estructuraDeFases = lectorDefases.armarFases();			
+			
+			/*for(int i=0; i > lectorDefases.getCantPartidos(); i++) {
 								
-				///// ***** PRONOSTICOS *****  /////// 
+			//	estructuraDeFases.
 				
+			}*/
+			///// ***************************  ///////	
+			
+			
+			
+			
+			///// ******* RESULTADOS ********************************************  /////// 
+				 
+			try{
+										
 				//Lectura y disponibilización del Archivo de Configuración 
 				new ConfigReader(rutaConfig);
-								
 				
 				System.out.println("");
 	            System.out.println("conectando a la base de datos...");
 	            
 	            // Llamado a Iniciar la Conexión
 				LecturaPronosticos lecturaProno= new LecturaPronosticos();			
+							
+				ArrayList<String> listaParticipantes= lecturaProno.obtenerListaDeParticipantes();
 				
-				lecturaProno.cargarPronosticos();
+				System.out.println("CANTIDAD DE PARTICIPANTES :" + listaParticipantes.size());
+				//System.out.println("HASTA ACÁ LLEGÓ");
+				//System.out.println("HASTA ACÁ LLEGÓ");
 				
-				List<PronosticoObjetoParse> listita2 = lecturaProno.getListaDePronosticosParseados();
-				
-				for(PronosticoObjetoParse prono : listita2) {
-					System.out.println(prono.getIdParticipante());	
+				for(String participante : listaParticipantes) {
+								
+					System.out.println(participante);
+					
+					List<PronosticoObjetoParse> pronosticosParticipante = lecturaProno.obtenerPronosticosDeUnParticipante(participante);
+					System.out.println("HASTA ACÁ LLEGÓ");
+					for (PronosticoObjetoParse p: pronosticosParticipante) {
+						
+						System.out.println(p.getIdFase() + " " + p.getIdRonda() + " " + p.getIdParticipante() + " " + p.getNombreParticipante() + " " + p.getNombreEquipo1() + " " + p.getGanaEquipo1() + " " + p.getEmpate() + " " + p.getGanaEquipo2() + " " + p.getNombreEquipo2());
+					}
 				}
 				
-				System.out.println("Cantidad de Participantes: "+lecturaProno.obtenerCantParticipantes());
-
-				///// ***** ************** *****  /////// 
+			///// ***************************  ///////	 
 				
 				
 				
@@ -87,16 +96,11 @@ public class App {
 	        	System.out.println(e.getMessage());
 	        	System.exit(1);
 	        	
-	        }catch(CantidadDeGolesEnterosException e) {
-	        	
-	        	System.out.println(e.getMessage());
-	        	System.exit(1);
-	        	
-	        }catch(NumeroCorrectoDeCamposException e) {
-	        	
-	        	System.out.println(e.getMessage());
-	        	System.exit(1);
 	        }
+	        
+	        ///// ***********************  ///////
+	        
+	        
 
 	}
 }

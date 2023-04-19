@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.UTNTP1.entrega3.models.Partido.Resultado; 
+import org.UTNTP1.entrega3.models.ResultadoEnum.Resultado;
 
 
 public class Pronostico {
@@ -53,13 +53,13 @@ public class Pronostico {
     	int puntos = 0;
     	
     	if ((this.equipo.dameIdEquipo() % 2) != 0) {  // equipo 1 del partido (Id 1,3,5,etc...)
-    		if (this.partido.dameResultado(equipo) == this.pronosticoEquipo1 ) {
+    		if (this.partido.resultado(equipo) == this.pronosticoEquipo1 ) {
     			puntos = 1;
     		}
     	}
     		
     	if ((this.equipo.dameIdEquipo() % 2) == 0) {  // equipo 2 del partido (Id 2,4,5,etc...)
-    		if (this.partido.dameResultado(equipo) == this.pronosticoEquipo2 ) {
+    		if (this.partido.resultado(equipo) == this.pronosticoEquipo2 ) {
         		puntos = 1;
     	}    		
     	}

@@ -8,32 +8,55 @@ public class PronosticoObjetoParse {
 	private int id;
 	
 	@CsvBindByPosition(position = 1)
-	private int idParticipante;
+	private int idFase;
 	
 	@CsvBindByPosition(position = 2)
-	private String nombreParticipante;
+	private int idRonda;
 	
 	@CsvBindByPosition(position = 3)
-	private String nombreEquipo1;
+	private int idParticipante;
 	
 	@CsvBindByPosition(position = 4)
-	private String ganaEquipo1;
+	private String nombreParticipante;
 	
 	@CsvBindByPosition(position = 5)
-	private String empate;
+	private String nombreEquipo1;
 	
 	@CsvBindByPosition(position = 6)
-	private String ganaEquipo2;
+	private String ganaEquipo1;
 	
 	@CsvBindByPosition(position = 7)
+	private String empate;
+	
+	@CsvBindByPosition(position = 8)
+	private String ganaEquipo2;
+	
+	@CsvBindByPosition(position = 9)
 	private String nombreEquipo2;
 
+	
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getIdFase() {
+		return idFase;
+	}
+
+	public void setIdFase(int idFase) {
+		this.idFase = idFase;
+	}
+
+	public int getIdRonda() {
+		return idRonda;
+	}
+
+	public void setIdRonda(int idRonda) {
+		this.idRonda = idRonda;
 	}
 
 	public int getIdParticipante() {

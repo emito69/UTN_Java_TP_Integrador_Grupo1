@@ -1,4 +1,5 @@
 package org.UTNTP1.entrega3.models;
+import org.UTNTP1.entrega3.models.ResultadoEnum.Resultado;
 
 //CLASE Partido
 	public class Partido {
@@ -11,7 +12,7 @@ package org.UTNTP1.entrega3.models;
 	    private static int IdSiguiente=1; // la declaramos static, entonces se transforma en una variable DE CLASE. 
 	    								  // No pertenece a ningún objeto, sino que es compartida por todas las instancias de la clase.
 		
-	    public enum Resultado {ganador, perdedor, empate} //  clase Resultado (que tenga primer letra mayúscula por convención de nombre de clases).
+	    //public enum Resultado {ganador, perdedor, empate} //  clase Resultado (que tenga primer letra mayúscula por convención de nombre de clases).
 		
 	    //private Resultado resultadoEquipo;
 		
@@ -27,9 +28,10 @@ package org.UTNTP1.entrega3.models;
 	        					// entonces tengo que poner el nombre de la clase cuando hago el incremento Empleados.Id++ (SI ESTUVIERA FUERA DE LA CLASE Y ESTUVIERA COMO PUBLIC).
 		    }
 		    
+	    
 	    // GETTERs
 	    // El tipo de return del método tiene que ser tipo "Resultado" que es la clase enum que cree
-	    public Resultado dameResultado(Equipo equipox){	    	
+	    public Resultado resultado(Equipo equipox){	    	
 	    	if (equipox.dameIdEquipo() == equipo1.dameIdEquipo()) {
 	    		if(golesEquipo1 > golesEquipo2) {
 	    			//this.resultadoEquipo = Resultado.ganador;
