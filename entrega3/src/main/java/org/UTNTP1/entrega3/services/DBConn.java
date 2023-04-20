@@ -37,6 +37,9 @@ public class DBConn {
 	// METODO Conectar
 	public void conectar() throws DBConnErrorException{
 		
+		System.out.println("");
+        //System.out.println("conectando a la base de datos...");
+        //System.out.println("");
 		try {
 			// Abrir la conexión
 	        conexion = DriverManager.getConnection(URL_CONEX, USER, PASS);
@@ -48,9 +51,81 @@ public class DBConn {
 	    } 
 	}
 
-
+	// METODO Obtener LISTA con EQUIPOS
+			public ArrayList<String> obtenerListaDeEquipos() throws DBConnErrorException {
+				
+				Statement consulta4 = null;
+						
+				try {
+							
+					consulta4 = conexion.createStatement();
+					
+			        String sql4 = "SELECT DISTINCT nombreEquipo1 FROM entrega3.pronosticos";    
+					        
+			        ResultSet resultadoE1 = consulta4.executeQuery(sql4);
+	  		        		        	      	              
+	     	        	        
+			        ArrayList<String> listaEquipos = new ArrayList<String>();
+			        
+			        while(resultadoE1.next()){
+			        	
+			        	listaEquipos.add(resultadoE1.getString("nombreEquipo1"));
+			        			        		        
+			        }
+			        
+			        sql4 = "SELECT DISTINCT nombreEquipo2 FROM entrega3.pronosticos";    
+			        
+			        ResultSet resultadoE2 = consulta4.executeQuery(sql4);
+	  		        		        	      	              
+			        
+			        while(resultadoE2.next()){
+			        	
+			        	listaEquipos.add(resultadoE2.getString("nombreEquipo2"));
+			        			        		        
+			        }
+			        
+			        //Cierra la conexión a la base de datos
+			        resultadoE1.close();
+			        resultadoE2.close();
+			        consulta4.close();
+			        conexion.close();
+			        
+					return listaEquipos;
+					
+			        
+				 }catch(SQLException e){ 
+					 
+					 e.printStackTrace();
+					 throw new DBConnErrorException();
+				 
+				 }finally{
+					 
+					 try{
+				        	
+				         if(consulta4 != null) {
+				         	consulta4.close();
+				         }
+				        
+				     }catch(SQLException e){ 
+				        
+				        	throw new DBConnErrorException(); 
+				        }
+				        
+				     try{
+				            
+				      		if(conexion != null) {
+				        		conexion.close();
+				        	}
+				       
+				      }catch(SQLException e){ 
+				        
+				        	throw new DBConnErrorException(); 
+				        }
+		   
+				 }
+			}
 		
-		// METODO ResultSet con PARTICIPANTES 
+		// METODO Obtener LISTA con PARTICIPANTES 
 		public ArrayList<String> obtenerListaDeParticipantes() throws DBConnErrorException {
 			
 			Statement consulta2 = null;

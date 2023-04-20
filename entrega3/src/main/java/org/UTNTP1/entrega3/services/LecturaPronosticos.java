@@ -2,6 +2,7 @@ package org.UTNTP1.entrega3.services;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import org.UTNTP1.entrega3.models.PronosticoObjetoParse;
 import java.sql.ResultSet;
@@ -34,6 +35,22 @@ public class LecturaPronosticos {
 		
 		return listaDePronosticosParseados;
 		
+	}
+	
+	
+	// MÉTODO OBTENCIÓN ArrayList<String> EQUIPOS
+	public HashSet<String> obtenerListaDeEquipos()  throws IOException, DBConnErrorException {
+		
+		DBConn dbConn4 = new DBConn();
+		dbConn4.conectar();
+		
+		ArrayList<String> listaEquipos = dbConn4.obtenerListaDeEquipos();
+
+		HashSet<String> listaEquiposUnicos = new HashSet<String>(listaEquipos);
+		
+		return listaEquiposUnicos;
+	
+	
 	}
 	
 	

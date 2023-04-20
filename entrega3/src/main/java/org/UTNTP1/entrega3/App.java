@@ -15,6 +15,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -22,69 +23,70 @@ import java.util.List;
 public class App {
 
 	public static void main(String[] args) {
+				
 		
+		String rutaResultados = args[0];
 		
+		String rutaConfig = args[1];
 		
-			//String rutaAbsoluta1 = "C:\\Users\\alvar\\Documents\\EclipseProjects\\entrega1\\src\\main\\java\\org\\UTNTP1\\entrega1\\archivos\\resultados.csv";
-			//String rutaAbsoluta2 = "C:\\Users\\alvar\\Documents\\EclipseProjects\\entrega1\\src\\main\\java\\org\\UTNTP1\\entrega1\\archivos\\pronostico.csv";
+			//String rutaResultados = "C:\\Users\\alvar\\Downloads\\pruebas GIT UTN\\UTN_Java_TP_Integrador_Grupo1\\entrega3\\src\\main\\resources\\resultados.csv";//args[0]
 			
-			
-			String rutaResultados = "C:\\Users\\alvar\\Downloads\\pruebas GIT UTN\\UTN_Java_TP_Integrador_Grupo1\\entrega3\\src\\main\\resources\\resultados.csv";//args[0]
-			
-			String rutaConfig = "C:\\Users\\alvar\\Downloads\\pruebas GIT UTN\\UTN_Java_TP_Integrador_Grupo1\\entrega3\\src\\main\\resources\\config.properties";//args[1]
+			//String rutaConfig = "C:\\Users\\alvar\\Downloads\\pruebas GIT UTN\\UTN_Java_TP_Integrador_Grupo1\\entrega3\\src\\main\\resources\\config.properties";//args[1]
 			
 
-			///// ******* PRONOSTICOS **************************************  ///////	
+		
+			
+		///// ******* 1- LECTURA DE LOS RESULTADOS ********************************************  //////
 			
 			LecturaFases lectorDefases = new LecturaFases(rutaResultados);	
 						
 			Fases estructuraDeFases = lectorDefases.armarFases();			
 			
-			/*for(int i=0; i > lectorDefases.getCantPartidos(); i++) {
-								
-			//	estructuraDeFases.
+			/*for(int i=1; i < 2; i++) {
+				String index = String.valueOf(i);
+				System.out.println(" EMIIIII :" + estructuraDeFases.fase(index).ronda(index));
 				
 			}*/
-			///// ***************************  ///////	
+					
 			
 			
-			
-			
-			///// ******* RESULTADOS ********************************************  /////// 
+		///// ******* 2- LECTURA DE PRONOSTICOS y CÁLCULO DE PUNTOS ********************************************************  ///////
 				 
 			try{
 										
 				//Lectura y disponibilización del Archivo de Configuración 
 				new ConfigReader(rutaConfig);
 				
-				System.out.println("");
-	            System.out.println("conectando a la base de datos...");
-	            
-	            // Llamado a Iniciar la Conexión
+	            // Llamado a Iniciar la Conexión         
 				LecturaPronosticos lecturaProno= new LecturaPronosticos();			
-							
+						
 				ArrayList<String> listaParticipantes= lecturaProno.obtenerListaDeParticipantes();
+				HashSet<String> listaEquipos= lecturaProno.obtenerListaDeEquipos();
 				
-				System.out.println("CANTIDAD DE PARTICIPANTES :" + listaParticipantes.size());
-				//System.out.println("HASTA ACÁ LLEGÓ");
-				//System.out.println("HASTA ACÁ LLEGÓ");
+				/*
+				for (String equipo : listaEquipos) {
+					System.out.println(equipo);
+				}
+				*/
 				
+				//System.out.println("CANTIDAD DE PARTICIPANTES :" + listaParticipantes.size());
+				//System.out.println("HASTA ACÁ LLEGÓ");
+								
 				for(String participante : listaParticipantes) {
 								
-					System.out.println(participante);
+					// System.out.println(participante);
 					
 					List<PronosticoObjetoParse> pronosticosParticipante = lecturaProno.obtenerPronosticosDeUnParticipante(participante);
-					System.out.println("HASTA ACÁ LLEGÓ");
-					for (PronosticoObjetoParse p: pronosticosParticipante) {
+					
+					PuntosPronostico puntosParticipante = new PuntosPronostico(estructuraDeFases, pronosticosParticipante, listaEquipos);
+							
+							
+					/*for (PronosticoObjetoParse p: pronosticosParticipante) {
 						
 						System.out.println(p.getIdFase() + " " + p.getIdRonda() + " " + p.getIdParticipante() + " " + p.getNombreParticipante() + " " + p.getNombreEquipo1() + " " + p.getGanaEquipo1() + " " + p.getEmpate() + " " + p.getGanaEquipo2() + " " + p.getNombreEquipo2());
-					}
+					}*/
+					
 				}
-				
-			///// ***************************  ///////	 
-				
-				
-				
 				
 	        }catch(IOException e){
 	        	
@@ -98,7 +100,10 @@ public class App {
 	        	
 	        }
 	        
-	        ///// ***********************  ///////
+	     
+			
+		///// ******* 3- LECTURA DE PRONOSTICOS ********************************************************  ///////			
+			
 	        
 	        
 

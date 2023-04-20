@@ -41,7 +41,7 @@ public class LecturaResultados {
 						.withType(ResultadoObjetoParse.class)
 						.build()
 						.parse();
-	
+		
 		//verificarNumeroCorrectoDeCampos();
 		//validarCantidadDeGolesEntero();
 		

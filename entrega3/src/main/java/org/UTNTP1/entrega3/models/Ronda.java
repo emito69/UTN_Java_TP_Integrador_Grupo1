@@ -22,8 +22,18 @@ public class Ronda {
         return this.nro;
     }
     
+    public int tamaño_ronda(){
+    	
+        return this.ronda.size();
+    }
+    
+    public ArrayList<Partido> dameRonda(){
+    	
+        return this.ronda;
+    }
+    
     // Leer Partido
-	public Partido ronda(String nro){
+	public Partido partido(String nro){
 		
 		return ronda.get(Integer.parseInt(nro)-1);
 	}	
