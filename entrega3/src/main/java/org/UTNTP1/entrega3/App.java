@@ -29,9 +29,9 @@ public class App {
 		
 		String rutaConfig = args[1];
 		
-			//String rutaResultados = "C:\\Users\\alvar\\Downloads\\pruebas GIT UTN\\UTN_Java_TP_Integrador_Grupo1\\entrega3\\src\\main\\resources\\resultados.csv";//args[0]
+		//String rutaResultados = "C:\\Users\\alvar\\Downloads\\pruebas GIT UTN\\UTN_Java_TP_Integrador_Grupo1\\entrega3\\src\\main\\resources\\resultados.csv";//args[0]
 			
-			//String rutaConfig = "C:\\Users\\alvar\\Downloads\\pruebas GIT UTN\\UTN_Java_TP_Integrador_Grupo1\\entrega3\\src\\main\\resources\\config.properties";//args[1]
+		//String rutaConfig = "C:\\Users\\alvar\\Downloads\\pruebas GIT UTN\\UTN_Java_TP_Integrador_Grupo1\\entrega3\\src\\main\\resources\\config.properties";//args[1]
 			
 
 		
