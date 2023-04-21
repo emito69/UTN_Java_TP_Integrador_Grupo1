@@ -25,13 +25,13 @@ public class App {
 	public static void main(String[] args) {
 				
 		
-		String rutaResultados = args[0];
+		//String rutaResultados = args[0];
 		
-		String rutaConfig = args[1];
+		//String rutaConfig = args[1];
 		
-		//String rutaResultados = "C:\\Users\\alvar\\Downloads\\pruebas GIT UTN\\UTN_Java_TP_Integrador_Grupo1\\entrega3\\src\\main\\resources\\resultados.csv";//args[0]
+		String rutaResultados = "C:\\Users\\alvar\\Downloads\\pruebas GIT UTN\\UTN_Java_TP_Integrador_Grupo1\\entrega3\\src\\main\\resources\\resultados.csv";//args[0]
 			
-		//String rutaConfig = "C:\\Users\\alvar\\Downloads\\pruebas GIT UTN\\UTN_Java_TP_Integrador_Grupo1\\entrega3\\src\\main\\resources\\config.properties";//args[1]
+		String rutaConfig = "C:\\Users\\alvar\\Downloads\\pruebas GIT UTN\\UTN_Java_TP_Integrador_Grupo1\\entrega3\\src\\main\\resources\\config.properties";//args[1]
 			
 
 		
@@ -99,14 +99,7 @@ public class App {
 	        	System.exit(1);
 	        	
 	        }
-	        
 	     
-			
-		///// ******* 3- LECTURA DE PRONOSTICOS ********************************************************  ///////			
-			
-	        
-	        
-
 	}
 }
 

@@ -20,14 +20,8 @@ public class PuntosPronostico {
 	private List<PronosticoObjetoParse> pronosticosParticipante; // pronosticos de todos los partidos, de todas las rondas, de todas las fases de un participante 
 	private HashSet<String> listaEquipos;
 	
-	private ArrayList<ArrayList<Integer>> listaAciertosRondas;
-	private ArrayList<Integer> aciertosRondas;
-	
-	private ArrayList<ArrayList<Integer>> prueba1;
-	private ArrayList<Integer> prueba12;
-	
 	private ArrayList<Hashtable<String, Integer>> listaAciertosEquiposenFases;
-	private Hashtable<String, Integer> aciertosEquiposEnFases;
+
 	
 	private int tamanioFases;
 	private int tamanioFase;
@@ -35,16 +29,6 @@ public class PuntosPronostico {
 	private int cantidadEquipos;
 	
 	private int puntosTotales;
-	
-	//private Ronda ronda; // resultados de la fecha
-	//private Partido partido;  // el partido por el que quiero consultar
-	//private Equipo equipo;   // el equipo por el que quiero consultar
-	//private String[][] matrix = new String[3][5];
-	
-	//importé la clase enum Resultado (import Entrega1.Partido.Resultado) que cree en Partido 
-	// para poder hacer comparaciones con los enum que genero aquí
-	//Resultado pronosticoEquipo1;
-	//Resultado pronosticoEquipo2;
 	
 	
 	//--- DATOS DE CONFIGURACIÓN DE PUNTOS -----------------
@@ -70,33 +54,37 @@ public class PuntosPronostico {
     	this.listaEquipos = listaEquipos;
     	   	
     	
-    	//INICIALIZAMOS listaAciertosRondas
+    	//INICIALIZAMOS Matrix listaAciertosRondas
     	this.tamanioFases = fases.size();
     	//System.out.println("tamanioFases: " + tamanioFases);
     	this.tamanioFase = fases.fase("1").size();
     	//System.out.println("tamanioFase: " + tamanioFase);
     	this.tamanioRonda = fases.fase("1").ronda("1").tamaño_ronda();
     	//System.out.println("tamanioRonda: " + tamanioRonda);
-
+       	int[][] matrix = new int[tamanioFases][tamanioFase];
+     	
+    	for (int x=0; x < matrix.length; x++) {
+            for (int y=0 ; y < matrix[x].length; y++) {
+                matrix[x][y] = 0;
+            }
+        }
+    	
     	
     	//INICIALIZAMOS listaAciertosEquiposenFases
     	this.cantidadEquipos = listaEquipos.size();
-    	
-    	this.aciertosEquiposEnFases = new Hashtable<String, Integer>();
-    	
-    	for (String e : listaEquipos) {
-        	
-    		aciertosEquiposEnFases.put(e, 0); // agrego pares <nombreEquipo, puntos>
-    	
-    	}
-    	    	
+  	
     	this.listaAciertosEquiposenFases = new ArrayList<Hashtable<String, Integer>>();
+    	
     	for (int i=0; i<tamanioFase; i++) {
     	
-    		listaAciertosEquiposenFases.add(aciertosEquiposEnFases);
-    		
+    		listaAciertosEquiposenFases.add(new Hashtable<String, Integer>());
+    	
+        	for (String e : listaEquipos) {
+        	
+        		listaAciertosEquiposenFases.get(i).put(e, 0); // agrego pares <nombreEquipo, puntos>
+        	
+        	}
     	}
-    		
     	
     	puntosTotales = 0;
     	    	
@@ -104,18 +92,12 @@ public class PuntosPronostico {
     	int i=1; // reinicio el nro de partido
     	
     	int valorAnterior0 =0;
-    	int valorAnterior1 =0;
-    	int valorAnterior2 =0;
-    	
-    	int[][] matrix = new int[tamanioFases][tamanioFase];
-    	int max;
-    	
-    	for (int x=0; x < matrix.length; x++) {
-            for (int y=0 ; y < matrix[x].length; y++) {
-                matrix[x][y] = 0;
-            }
-        }
-        
+    	Hashtable<String, Integer>  valorAnterior1 =null;
+    	int  valorAnterior1m =0;
+
+    	Hashtable<String, Integer>  valorAnterior2 =null;
+    	int  valorAnterior2m =0;
+    	       
     	
     	// Recorro todos los pronósticos del Participante
     	for (PronosticoObjetoParse p: pronosticosParticipante) {
@@ -149,7 +131,6 @@ public class PuntosPronostico {
     			// **** SUMO LOS PUNTOS DE ESTE PARTIDO:
     			puntos = puntos + PUNTOS_POR_ACIERTO;
     			
-    			
     			// **** SUMO ACIERTOS A CADA RONDA:
     			// cada ronda es de 4 partidos, así que si acertó todos esa ronda sumaría 4 aciertos
     			
@@ -158,34 +139,26 @@ public class PuntosPronostico {
     			
     			// **** SUMO ACIERTOS A CADA FASE:
     			// cada equipo juega en una 2 VECES en una Ronda -- y esa cantidad por la cantidad de rondas en la fase 
+    			// -> cant másxima sería 2 x 2 = 4 veces por fase
     			// este valor podríamos ponerlo en el CONFIG porque depende de cómo se organiza el torneo
     			// no hay una regla clara
-    			// si 
     			
-    			valorAnterior1 = listaAciertosEquiposenFases.get(p.getIdFase()-1).get(p.getNombreEquipo1());
-    			listaAciertosEquiposenFases.get(p.getIdFase()-1).put(p.getNombreEquipo1(), valorAnterior1+1);
-    			valorAnterior2 = listaAciertosEquiposenFases.get(p.getIdFase()-1).get(p.getNombreEquipo1());
-    			listaAciertosEquiposenFases.get(p.getIdFase()-1).put(p.getNombreEquipo2(), valorAnterior2+1);
     			
+    			valorAnterior1m = listaAciertosEquiposenFases.get(p.getIdFase()-1).get(p.getNombreEquipo1());
+    			listaAciertosEquiposenFases.get(p.getIdFase()-1).put(p.getNombreEquipo1(), valorAnterior1m+1);
+    			
+    			//System.out.println(p.getNombreEquipo1() +" "+ p.getGanaEquipo1()+" // "+" "+p.getGanaEquipo2()+" "+p.getNombreEquipo2());
+
+    			valorAnterior2m = listaAciertosEquiposenFases.get(p.getIdFase()-1).get(p.getNombreEquipo2());
+    			listaAciertosEquiposenFases.get(p.getIdFase()-1).put(p.getNombreEquipo2(), valorAnterior2m+1);
+    		 
     		}
     			    			
     		i++;	      		
     		
     	}
     	
-    	/*
-    	// IMPRIMIMOS LOS PUNTOS POR PARTIDOS 
-    	System.out.println("EMI puntos participante por PARTIDOS: " + puntos);    
-    	*/
-    	/*
-    	// IMPRIMIMOS LOS ACIERTOS POR RONDA
-    	for (int x=0; x < matrix.length; x++) {
-            for (int y=0 ; y < matrix[x].length; y++) {
-            	System.out.println("aciertos Ronda: "+matrix[x][y]);
-            }
-                //System.out.println(arr[x][y]);
-        }
-    	*/
+        /*
     	// IMPRIMIMOS LOS ACIERTOS POR EQUIPOS POR FASE
 	    
     	for (Hashtable<String, Integer> h: listaAciertosEquiposenFases) {
@@ -193,6 +166,7 @@ public class PuntosPronostico {
 	           System.out.println("Key /Value: " + h);
 	    }
     	
+    	*/
     	// IMPRIMIMOS RESULTADOS GLOBALES
 	        	
     	System.out.println("PARTICIPANTE :" + pronosticosParticipante.get(1).getNombreParticipante());
